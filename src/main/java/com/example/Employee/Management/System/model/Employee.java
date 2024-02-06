@@ -19,12 +19,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotBlank(message = "Employee name must be specified")
     private String name;
-
-    @NotBlank(message = "Employee email must be specified")
     private String email;
-
     private String department;
 }

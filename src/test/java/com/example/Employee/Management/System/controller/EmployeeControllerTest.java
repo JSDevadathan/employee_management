@@ -44,9 +44,9 @@ public class EmployeeControllerTest {
         Long id = 1L;
         EmployeeResponse expectedResponse = new EmployeeResponse();
 
-        Mockito.when(employeeService.getEmployees(id)).thenReturn(expectedResponse);
+        Mockito.when(employeeService.getEmployeeById(id)).thenReturn(expectedResponse);
 
-        EmployeeResponse actualResponse = employeeController.getEmployees(id);
+        EmployeeResponse actualResponse = employeeController.getEmployeeById(id);
 
         assertEquals(expectedResponse, actualResponse);
     }

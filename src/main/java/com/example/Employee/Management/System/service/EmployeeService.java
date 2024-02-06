@@ -28,7 +28,7 @@ public class EmployeeService {
         return modelMapper.map(employee, EmployeeResponse.class);
     }
 
-    public EmployeeResponse getEmployees(Long id) {
+    public EmployeeResponse getEmployeeById(Long id) {
         Employee employee =
                 employeeRepository
                         .findById(id)

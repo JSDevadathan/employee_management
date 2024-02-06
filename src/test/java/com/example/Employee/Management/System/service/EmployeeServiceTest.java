@@ -1,6 +1,7 @@
 package com.example.Employee.Management.System.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -12,6 +13,8 @@ import com.example.Employee.Management.System.repository.EmployeeRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
@@ -56,8 +59,10 @@ public class EmployeeServiceTest {
         Employee expectedEmployee = new Employee();
         EmployeeResponse expectedResponse =
                 modelMapper.map(expectedEmployee, EmployeeResponse.class);
+        when(employeeRepository.findById(id)).thenReturn(Optional.empty());
+        assertThrows(EntityNotFoundException.class, () -> employeeService.getEmployeeById(id));
         Mockito.when(employeeRepository.findById(id)).thenReturn(Optional.of(expectedEmployee));
-        EmployeeResponse actualResponse = employeeService.getEmployees(id);
+        EmployeeResponse actualResponse = employeeService.getEmployeeById(id);
 
         assertEquals(expectedResponse, actualResponse);
     }

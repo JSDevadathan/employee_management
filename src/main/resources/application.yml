@@ -2,7 +2,7 @@ spring:
   dataSource:
     url: jdbc:postgresql://localhost:5432/EmployeeManagement
     username: postgres
-    password: devadath@1234
+    password: edstem@23
     driver-class-name: org.postgresql.Driver
   profile:
     active: dev

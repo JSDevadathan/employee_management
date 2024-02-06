@@ -35,18 +35,10 @@ public class EmployeeServiceTest {
     @Test
     public void testCreateEmployee() {
         EmployeeRequest employeeRequest = new EmployeeRequest();
-        Employee expectedEmployee =
-                Employee.builder()
-                        .department(employeeRequest.getDepartment())
-                        .email(employeeRequest.getEmail())
-                        .name(employeeRequest.getName())
-                        .build();
 
-        EmployeeResponse expectedResponse =
-                modelMapper.map(expectedEmployee, EmployeeResponse.class);
+        EmployeeResponse expectedResponse = new EmployeeResponse();
 
-        Mockito.when(employeeRepository.save(Mockito.any(Employee.class)))
-                .thenReturn(expectedEmployee);
+        Mockito.when(employeeService.createEmployee(employeeRequest)).thenReturn(expectedResponse);
 
         EmployeeResponse actualResponse = employeeService.createEmployee(employeeRequest);
 

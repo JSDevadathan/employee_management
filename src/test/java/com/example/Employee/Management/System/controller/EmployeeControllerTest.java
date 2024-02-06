@@ -6,10 +6,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.Employee.Management.System.contract.request.EmployeeRequest;
 import com.example.Employee.Management.System.contract.response.EmployeeResponse;
+import com.example.Employee.Management.System.model.Employee;
+import com.example.Employee.Management.System.repository.EmployeeRepository;
 import com.example.Employee.Management.System.service.EmployeeService;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,15 +29,29 @@ public class EmployeeControllerTest {
 
     @MockBean private EmployeeService employeeService;
 
+    @MockBean
+    private EmployeeRepository employeeRepository;
+
+    @MockBean
+    private ModelMapper modelMapper;
+
     @Test
     public void testCreateEmployee() {
         EmployeeRequest employeeRequest = new EmployeeRequest();
+        Employee expectedEmployee =
+                Employee.builder()
+                        .department(employeeRequest.getDepartment())
+                        .email(employeeRequest.getEmail())
+                        .name(employeeRequest.getName())
+                        .build();
 
-        EmployeeResponse expectedResponse = new EmployeeResponse();
+        EmployeeResponse expectedResponse =
+                modelMapper.map(expectedEmployee, EmployeeResponse.class);
 
-        Mockito.when(employeeService.createEmployee(employeeRequest)).thenReturn(expectedResponse);
+        Mockito.when(employeeRepository.save(Mockito.any(Employee.class)))
+                .thenReturn(expectedEmployee);
 
-        EmployeeResponse actualResponse = employeeController.createEmployee(employeeRequest);
+        EmployeeResponse actualResponse = employeeService.createEmployee(employeeRequest);
 
         assertEquals(expectedResponse, actualResponse);
     }

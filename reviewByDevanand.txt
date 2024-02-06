@@ -1,9 +1,7 @@
 Review by Devanand
 
-name and email is not validating:
-
 In service test, test case EntityNotFoundException("No such employee") not fond
- mian () test not done in EmployeeManagementSystemApplicationTests
+ main () test not done in EmployeeManagementSystemApplicationTests
 
 
 

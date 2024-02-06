@@ -13,7 +13,7 @@
 
 # Application.yml
 
-1. In **application.yml**, the database username and password should not be provided in **application.yml**.
+1. In **application.yml**, the database username and password should not be provided.
 
 
 

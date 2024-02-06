@@ -4,6 +4,8 @@ import com.example.Employee.Management.System.contract.request.EmployeeRequest;
 import com.example.Employee.Management.System.contract.response.EmployeeResponse;
 import com.example.Employee.Management.System.service.EmployeeService;
 import java.util.List;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +21,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping()
-    public EmployeeResponse createEmployee(@RequestBody EmployeeRequest employeeRequest) {
+    public EmployeeResponse createEmployee(@Valid @RequestBody EmployeeRequest employeeRequest) {
         return employeeService.createEmployee(employeeRequest);
     }
 

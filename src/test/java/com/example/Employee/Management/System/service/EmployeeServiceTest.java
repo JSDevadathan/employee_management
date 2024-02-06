@@ -54,7 +54,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void testGetEmployees() {
+    public void testGetEmployeeById() {
         Long id = 1L;
         Employee expectedEmployee = new Employee();
         EmployeeResponse expectedResponse =

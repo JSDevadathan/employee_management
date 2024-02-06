@@ -40,7 +40,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    public void testGetEmployees() {
+    public void testGetEmployeeById() {
         Long id = 1L;
         EmployeeResponse expectedResponse = new EmployeeResponse();
 

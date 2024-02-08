@@ -8,13 +8,14 @@ import static org.mockito.Mockito.when;
 
 import com.example.Employee.Management.System.contract.request.EmployeeRequest;
 import com.example.Employee.Management.System.contract.response.EmployeeResponse;
+import com.example.Employee.Management.System.exception.EntityNotFoundException;
 import com.example.Employee.Management.System.model.Employee;
 import com.example.Employee.Management.System.repository.EmployeeRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import jakarta.persistence.EntityNotFoundException;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
@@ -60,19 +61,20 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void getEmployeesByDepartment() {
-        when(employeeRepository.findByDepartment(Mockito.any())).thenReturn(new ArrayList<>());
-        Employee employee =
-                Employee.builder()
-                        .id(1L)
-                        .name("Name")
-                        .department("dept")
-                        .email("email@gmail.com")
-                        .build();
-
-        List<EmployeeResponse> actualEmployeeByDepartment =
-                employeeService.getEmployeesByDepartment("dept");
-        verify(employeeRepository).findByDepartment(Mockito.any());
-        assertTrue(actualEmployeeByDepartment.isEmpty());
+    void testGetEmployeesByDepartment() {
+        ArrayList<Employee> employeeList = new ArrayList<>();
+        employeeList.add(new Employee());
+        when(employeeRepository.findByDepartment(Mockito.<String>any())).thenReturn(employeeList);
+        EmployeeResponse buildResult = EmployeeResponse.builder()
+                .department("Department")
+                .email("js@gmail.com")
+                .id(1L)
+                .name("Name")
+                .build();
+        when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<EmployeeResponse>>any())).thenReturn(buildResult);
+        List<EmployeeResponse> actualEmployeesByDepartment = employeeService.getEmployeesByDepartment("Department");
+        verify(employeeRepository).findByDepartment(Mockito.<String>any());
+        verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<EmployeeResponse>>any());
+        assertEquals(1, actualEmployeesByDepartment.size());
     }
 }
